@@ -1,0 +1,19 @@
+version: '2'
+
+services:
+  gcpdemo:
+    image: nginx
+    restart: always
+    networks:
+      - web
+      - default
+    labels:
+      - "traefik.backend=gcpdemo"
+      - "traefik.docker.network=web"
+      - "traefik.frontend.rule=Host:gcpdemo.arecord.us"
+      - "traefik.enable=true"
+      - "traefik.default.protocol=http"
+
+networks:
+  web:
+    external: true
