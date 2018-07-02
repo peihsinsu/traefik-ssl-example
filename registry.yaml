@@ -1,0 +1,21 @@
+version: '2'
+
+services:
+  registry-ssct:
+    image: registry 
+    restart: always
+    volumes:
+      - ${PWD}/config.yml:/etc/docker/registry/config.yml
+    networks:
+      - web
+      - default
+    labels:
+      - "traefik.backend=registry-ssct"
+      - "traefik.docker.network=web"
+      - "traefik.frontend.rule=Host:registry-ssct.arecord.us"
+      - "traefik.enable=true"
+      - "traefik.default.protocol=http"
+
+networks:
+  web:
+    external: true
